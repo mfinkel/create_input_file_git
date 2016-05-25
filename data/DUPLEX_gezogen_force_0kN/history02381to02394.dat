@@ -1,0 +1,57 @@
+
+2016-05-21 
+----------
+
+                d1h:  12.01    d2h:   3.80    d2v:   3.79    d2x: 300.00 
+
+                Chopper speed:  5000
+
+Title:  elastic constanc
+Sample:  DUPLEX_gezogen_0kN_omega_45_phi_0
+ file | start |      time | monitor |     cpm |     shu |     shl |      sv |      sa
+ 2381 | 10:15 |  00:10:33 |   30000 |    3.09 |  -38.50 |   37.66 |  100.71 |   45.00
+
+                d1h:  12.01    d2h:   3.80    d2v:   3.79    d2x: 300.00 
+ 2382 | 10:26 |  00:10:29 |   30000 |    3.08 |         |         |         |        
+
+Sample:  DUPLEX_gezogen_0kN_omega_45_phi_15
+ file | start |      time | monitor |     cpm |     shu |     shl |      sv |      sa
+ 2383 | 10:37 |  00:10:29 |   30000 |    1.98 |  -38.50 |   37.66 |  100.71 |   45.00
+
+                d1h:  12.01    d2h:   3.80    d2v:   3.79    d2x: 300.00 
+ 2384 | 10:47 |  00:10:35 |   30000 |    1.95 |         |         |         |        
+
+Sample:  DUPLEX_gezogen_0kN_omega_45_phi_30
+ file | start |      time | monitor |     cpm |     shu |     shl |      sv |      sa
+ 2385 | 10:58 |  00:10:38 |   30000 |    2.54 |  -38.50 |   37.66 |  100.71 |   45.00
+
+                d1h:  12.01    d2h:   3.80    d2v:   3.79    d2x: 300.00 
+ 2386 | 11:09 |  00:10:57 |   30000 |    2.51 |         |         |         |        
+
+Sample:  DUPLEX_gezogen_0kN_omega_45_phi_45
+ file | start |      time | monitor |     cpm |     shu |     shl |      sv |      sa
+ 2387 | 11:20 |  00:10:39 |   30000 |    3.07 |  -38.50 |   37.66 |  100.71 |   45.00
+
+                d1h:  12.01    d2h:   3.80    d2v:   3.79    d2x: 300.00 
+ 2388 | 11:31 |  00:10:60 |   30000 |    3.08 |         |         |         |        
+
+Sample:  DUPLEX_gezogen_0kN_omega_45_phi_60
+ file | start |      time | monitor |     cpm |     shu |     shl |      sv |      sa
+ 2389 | 11:43 |  00:10:37 |   30000 |    3.10 |  -38.50 |   37.66 |  100.71 |   45.00
+
+                d1h:  12.01    d2h:   3.80    d2v:   3.79    d2x: 300.00 
+ 2390 | 11:53 |  00:10:31 |   30000 |    3.12 |         |         |         |        
+
+Sample:  DUPLEX_gezogen_0kN_omega_45_phi_75
+ file | start |      time | monitor |     cpm |     shu |     shl |      sv |      sa
+ 2391 | 12:04 |  00:10:57 |   30000 |    2.75 |  -38.50 |   37.66 |  100.71 |   45.00
+
+                d1h:  12.01    d2h:   3.80    d2v:   3.79    d2x: 300.00 
+ 2392 | 12:15 |  00:10:33 |   30000 |    2.77 |         |         |         |        
+
+Sample:  DUPLEX_gezogen_0kN_omega_45_phi_90
+ file | start |      time | monitor |     cpm |     shu |     shl |      sv |      sa
+ 2393 | 12:26 |  00:10:29 |   30000 |    3.05 |  -38.50 |   37.66 |  100.71 |   45.00
+
+                d1h:  12.01    d2h:   3.80    d2v:   3.79    d2x: 300.00 
+ 2394 | 12:37 |  00:10:31 |   30000 |    3.11 |         |         |         |        
