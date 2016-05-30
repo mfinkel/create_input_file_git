@@ -27,7 +27,7 @@ class DataRead(object):
                     strain, straind_err, stress, stress_err = strain_stress_list[count]
                     buffer = "{:3.0f}     {:>7}   {:1.0f} {} {}  {:2.0f}    {: 3.0f}     {: 1.7f}  {:1.7f}        " \
                              "{:9.0f}  {:9.0f}\n".format(
-                        force, phase, h, k, l, phi, psi, strain, straind_err, stress, stress_err
+                        force, phase, h, k, l, phi, -psi, strain, straind_err, stress, stress_err
                     )
                     data += buffer
         file = open(filename + ".dat", "w")
