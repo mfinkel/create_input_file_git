@@ -25,7 +25,6 @@ class DataRead(object):
                 for count in xrange(len(phi_psi_hkl_list)):
                     phi, psi, h, k, l = phi_psi_hkl_list[count]
                     strain, straind_err, stress, stress_err = strain_stress_list[count]
-                    psi = -float(psi)
                     buffer = "{:3.0f}     {:>7}   {:1.0f} {} {}  {:2.0f}    {: 3.0f}     {: 1.7f}  {:1.7f}        " \
                              "{:9.0f}  {:9.0f}\n".format(
                         force, phase, h, k, l, phi, psi, strain, straind_err, stress, stress_err
@@ -161,7 +160,10 @@ class LoadPOLDIData(DataRead):
                 if force != 0:
                     for k in xrange(len(dict[phase][force])):
                         # print "phase: ", phase, "Key: ", dict[phase].keys()
-                        chi_0, h_0, k_0, l_0, d_0, dd_0 = dict[phase][0][k]
+                        try:
+                            chi_0, h_0, k_0, l_0, d_0, dd_0 = dict[phase][0][k]
+                        except IndexError:
+                            break
                         # print "unstraind: \t", chi_0, h_0, k_0, l_0, d_0, dd_0
                         inkrement = 0
                         while True:
@@ -170,7 +172,7 @@ class LoadPOLDIData(DataRead):
 
                             if chi == chi_0 and h == h_0 and k == k_0 and l == l_0:
                                 psi = chi
-                                phi = 0
+                                phi = 180
                                 strain = None
                                 strainerr = None
                                 d_0 = float(d_0)
