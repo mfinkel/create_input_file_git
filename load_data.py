@@ -182,7 +182,7 @@ class LoadPOLDIData(DataRead):
                         inkrement = 0
                         while True:
                             chi, h, k, l, d, dd = dict[phase][force][inkrement]
-                            # print "straind: \t", chi, h, k, l, d, dd
+
 
                             if chi == chi_0 and h == h_0 and k == k_0 and l == l_0:
                                 psi = chi
@@ -194,9 +194,13 @@ class LoadPOLDIData(DataRead):
                                 d = float(d)
                                 dd = float(dd)
                                 if d_0 > np.power(10., -10) and d > np.power(10., -10):
+
                                     strain = (d - d_0) / d_0
                                     strainerr = dd / d_0 + (d * dd_0) / (d_0 ** 2)
                                     stress, stresserr = self.calc_applied_stress(force)
+                                    # if h == 2 and k == 2 and l == 2:
+                                    #     print "straind: \t", force, chi, h, k, l, d, dd
+                                    #     print strain, '\n'
                                     self.Data.data_dict[phase][force][0].append(
                                         [float(phi), float(psi), int(h), int(k), int(l)])
                                     self.Data.data_dict[phase][force][1].append([strain, strainerr, stress, stresserr])
