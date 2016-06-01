@@ -19,13 +19,14 @@ class DataRead(object):
         phase_keys = sorted(self.Data.data_dict.keys())
         for i, phase in enumerate(phase_keys):  # loop over all phases
             force_keys = sorted(self.Data.data_dict[phase].keys())
+            print force_keys
             for j, force in enumerate(force_keys):
                 phi_psi_hkl_list = self.Data.data_dict[phase][force][0]
                 strain_stress_list = self.Data.data_dict[phase][force][1]
                 for count in xrange(len(phi_psi_hkl_list)):
                     phi, psi, h, k, l = phi_psi_hkl_list[count]
                     strain, straind_err, stress, stress_err = strain_stress_list[count]
-                    buffer = "{:3.0f}     {:>7}   {:1.0f} {} {}  {:2.0f}    {: 3.0f}     {: 1.7f}  {:1.7f}        " \
+                    buffer = "{:4.1f}     {:>7}   {:1.0f} {} {}  {:2.0f}    {: 3.0f}     {: 1.7f}  {:1.7f}        " \
                              "{:9.0f}  {:9.0f}\n".format(
                         force, phase, h, k, l, phi, psi, strain, straind_err, stress, stress_err
                     )
@@ -68,12 +69,25 @@ class LoadPOLDIData(DataRead):
     def pars_dirname(name):
         # splits = re.split(r'_', name)
         # print material, a, force
-        pattern = re.compile(r'(\d+kN)')
-        pattern2 = re.compile(r'(\d+)')
+        pattern = re.compile(r'(\d*_?\d+kN)')
+        pattern2 = re.compile(r'(\d*_?\d+)')
+        pattern3 = re.compile(r'(\d+_?\d+)')
         force = 0
         for i in re.findall(pattern, name):
             for j in re.findall(pattern2, i):
-                force = float(j)
+                print "J: ", j
+                if re.match(pattern3, j) is not None:
+                    a, b = re.split('_', str(j))
+                    # j = '{}.{}'.format(a, b)
+                match = re.search(r"(\d*)(_)(\d+)", j)
+                print match
+                m = match.groups()
+                if m[0] == '':
+                    force = float(m[-1])
+                else:
+                    force = float(m[0] + '.' + m[-1])
+                # force = float(j)
+                print "Force: ", force
                 # force = i
                 # print "Force", force
         return force
