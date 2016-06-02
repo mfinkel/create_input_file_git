@@ -6,6 +6,7 @@ import os
 import re
 import numpy as np
 import PyQt4.QtGui as QtGui
+import Tkinter, Tkconstants, tkFileDialog
 
 
 class DataRead(object):
@@ -44,8 +45,13 @@ class LoadPOLDIData(DataRead):
 
     def get_all_files(self):
         # print os.getcwd()
-        QtGui.QFileDialog.getExistingDirectory('\\', )
-        main_dir_name = os.getcwd() + "\\data"
+
+        # root = Tkinter.Tk()
+        main_dir_name = tkFileDialog.askdirectory(initialdir="H:/Masterarbeit STRESS-SPEC/Daten/POLDI Daten", title='Please select a directory of the data')
+        main_dir_name = os.path.normpath(main_dir_name)
+
+        print main_dir_name
+        # main_dir_name = os.getcwd() + "\\data"
         dir_list = []
         for i in os.listdir(main_dir_name):  # loop over all folders containing the data under the different forces
             # print i
@@ -62,7 +68,7 @@ class LoadPOLDIData(DataRead):
             # print "filelist", filelist
             for j in xrange(len(filelist)):
                 f = dir_path + "\\" + filelist[j]
-                if ("history" not in filelist[j]) and os.path.isfile(f):  #
+                if ("history" not in filelist[j]) and os.path.isfile(f) and ("_data_" not in filelist[j]):  #
                     phase, h, k, l = self.pars_file_name(filelist[j])
                     f_list.append([f, force, phase, h, k, l])
         return sorted(f_list)
