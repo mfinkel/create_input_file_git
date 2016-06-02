@@ -5,6 +5,7 @@ the diameter of the sampel is nececarry to know.
 import os
 import re
 import numpy as np
+import PyQt4.QtGui as QtGui
 
 
 class DataRead(object):
@@ -43,6 +44,7 @@ class LoadPOLDIData(DataRead):
 
     def get_all_files(self):
         # print os.getcwd()
+        QtGui.QFileDialog.getExistingDirectory('\\', )
         main_dir_name = os.getcwd() + "\\data"
         dir_list = []
         for i in os.listdir(main_dir_name):  # loop over all folders containing the data under the different forces
