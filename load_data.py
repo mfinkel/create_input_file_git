@@ -220,12 +220,15 @@ class LoadPOLDIData(DataRead):
         :param force: applied force in kN
         :return: stress
         """
-        area = (self.sample_diameter * np.power(10., -3.)) ** 2 / 4 * np.pi
-        stress = force * np.power(10., 3) / area
+        sample_diameter = self.sample_diameter * np.power(10., -3.)
+        area = (sample_diameter ) ** 2 / 4 * np.pi
+        force = force * np.power(10., 3)
+        stress = force / area
         # stress_error = stress * (2 * 0.01 / self.sample_diameter + 0.05)
-        stress_error = np.sqrt((force * 0.2 / ((self.sample_diameter / 2) ** 2 * np.pi)) ** 2
-                               + (2 * force / ((self.sample_diameter / 2) ** 3 * np.pi) * (
-        self.sample_diameter / 2) * 0.1) ** 2)
+        stress_error = np.sqrt((force * 0.1 / ((float(sample_diameter) / 2.) ** 2 * np.pi)) ** 2
+                               + (2 * force / ((float(sample_diameter) / 2.) ** 3 * np.pi) * (
+                               float(sample_diameter) / 2.) * 0.05) ** 2)
+        print "stress error: ", stress_error
         return stress, stress_error
 
 
