@@ -193,8 +193,8 @@ class LoadPOLDIData(DataRead):
 
 
                             if chi == chi_0 and h == h_0 and k == k_0 and l == l_0:
-                                psi = 180 - chi
-                                phi = 90
+                                psi = chi
+                                phi = 180
                                 strain = None
                                 strainerr = None
                                 d_0 = float(d_0)
