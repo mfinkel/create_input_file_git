@@ -16,7 +16,7 @@ class DataRead(object):
 
     def save_data(self, filename, material="random"):
         header = "#Material: {} \n" \
-                 "#Force:\t Phase:\t  hkl:\t phi:\tpsi:\tstrain:\t   strain error:\tstress:\t    stress error:\n".format(material)
+                 "#Force:\t Phase:\t  hkl:\t phi:\t psi:\t D:\t   D error:\t stress:\t    stress error:\n".format(material)
         data = ""
         phase_keys = sorted(self.Data.data_dict.keys())
         for i, phase in enumerate(phase_keys):  # loop over all phases
@@ -27,10 +27,10 @@ class DataRead(object):
                 strain_stress_list = self.Data.data_dict[phase][force][1]
                 for count in xrange(len(phi_psi_hkl_list)):
                     phi, psi, h, k, l = phi_psi_hkl_list[count]
-                    strain, straind_err, stress, stress_err = strain_stress_list[count]
+                    D, D_err, stress, stress_err = strain_stress_list[count]
                     buffer = "{:4.1f}     {:>7}   {:1.0f} {} {}  {:2.0f}    {: 3.0f}     {: 1.7f}  {:1.7f}        " \
                              "{:9.0f}  {:9.0f}\n".format(
-                        force, phase, h, k, l, phi, psi, strain, straind_err, stress, stress_err
+                        force, phase, h, k, l, phi, psi, D, D_err, stress, stress_err
                     )
                     data += buffer
         file = open(filename + ".dat", "w")
@@ -176,44 +176,51 @@ class LoadPOLDIData(DataRead):
             phase = phase_key[i]
             self.Data.data_dict[phase] = {}
             force_key = sorted(dict[phase].keys())
-            for j in xrange(len(force_key)):
+            for j in xrange(len(force_key)):  # loop over all forces
                 force = force_key[j]
                 self.Data.data_dict[phase][force] = [[], []]
-                if force != 0:
-                    for k in xrange(len(dict[phase][force])):
-                        # print "phase: ", phase, "Key: ", dict[phase].keys()
-                        try:
-                            chi_0, h_0, k_0, l_0, d_0, dd_0 = dict[phase][0][k]
-                        except IndexError:
-                            break
-                        # print "unstraind: \t", chi_0, h_0, k_0, l_0, d_0, dd_0
-                        inkrement = 0
-                        while True:
-                            chi, h, k, l, d, dd = dict[phase][force][inkrement]
-
-
-                            if chi == chi_0 and h == h_0 and k == k_0 and l == l_0:
-                                psi = chi
-                                phi = 180
-                                strain = None
-                                strainerr = None
-                                d_0 = float(d_0)
-                                dd_0 = float(dd_0)
-                                d = float(d)
-                                dd = float(dd)
-                                if d_0 > np.power(10., -10) and d > np.power(10., -10):
-
-                                    strain = (d - d_0) / d_0
-                                    strainerr = dd / d_0 + (d * dd_0) / (d_0 ** 2)
-                                    stress, stresserr = self.calc_applied_stress(force)
-                                    # if h == 2 and k == 2 and l == 2:
-                                    #     print "straind: \t", force, chi, h, k, l, d, dd
-                                    #     print strain, '\n'
-                                    self.Data.data_dict[phase][force][0].append(
-                                        [float(phi), float(psi), int(h), int(k), int(l)])
-                                    self.Data.data_dict[phase][force][1].append([strain, strainerr, stress, stresserr])
-                                break
-                            inkrement += 1
+                stress, stresserr = self.calc_applied_stress(force)
+                for k in xrange(len(dict[phase][force])):
+                    chi, h, k, l, d, dd = dict[phase][force][k]
+                    psi = chi
+                    phi = -90
+                    self.Data.data_dict[phase][force][0].append([float(phi), float(psi), int(h), int(k), int(l)])
+                    self.Data.data_dict[phase][force][1].append([d, dd, stress, stresserr])
+                # if force != 0:
+                #     for k in xrange(len(dict[phase][force])):
+                #         # print "phase: ", phase, "Key: ", dict[phase].keys()
+                #         try:
+                #             chi_0, h_0, k_0, l_0, d_0, dd_0 = dict[phase][0][k]
+                #         except IndexError:
+                #             break
+                #         # print "unstraind: \t", chi_0, h_0, k_0, l_0, d_0, dd_0
+                #         inkrement = 0
+                #         while True:
+                #             chi, h, k, l, d, dd = dict[phase][force][inkrement]
+                #
+                #
+                #             if chi == chi_0 and h == h_0 and k == k_0 and l == l_0:
+                #                 psi = chi
+                #                 phi = 180
+                #                 strain = None
+                #                 strainerr = None
+                #                 d_0 = float(d_0)
+                #                 dd_0 = float(dd_0)
+                #                 d = float(d)
+                #                 dd = float(dd)
+                #                 if d_0 > np.power(10., -10) and d > np.power(10., -10):
+                #
+                #                     strain = (d - d_0) / d_0
+                #                     strainerr = dd / d_0 + (d * dd_0) / (d_0 ** 2)
+                #                     stress, stresserr = self.calc_applied_stress(force)
+                #                     # if h == 2 and k == 2 and l == 2:
+                #                     #     print "straind: \t", force, chi, h, k, l, d, dd
+                #                     #     print strain, '\n'
+                #                     self.Data.data_dict[phase][force][0].append(
+                #                         [float(phi), float(psi), int(h), int(k), int(l)])
+                #                     self.Data.data_dict[phase][force][1].append([strain, strainerr, stress, stresserr])
+                #                 break
+                #             inkrement += 1
 
     def calc_applied_stress(self, force):
         """
@@ -241,7 +248,7 @@ class LoadSPODIData(DataRead):
 class DataContainer(object):
     def __init__(self):
         self.data_dict = {}  # dictionary of the data. Key is the phase. val is the force dictionary. This has the force
-        # as key and the list [phi_psi_hkl, strain_stress_list] as val's.
+        # as key and the list [phi_psi_hkl, D_stress_list] as val's.
 
     def get_data_phase_1_force(self, force):
         return self.data_dict[1][force]
