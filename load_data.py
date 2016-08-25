@@ -28,7 +28,7 @@ class DataRead(object):
                 for count in xrange(len(phi_psi_hkl_list)):
                     phi, psi, h, k, l = phi_psi_hkl_list[count]
                     D, D_err, stress, stress_err = strain_stress_list[count]
-                    buffer = "{:4.1f}     {:>7}   {:1.0f} {} {}  {}    {}     {: 1.7f}  {:1.7f}        " \
+                    buffer = "{:4.1f}     {:>7}   {} {} {}  {:2.0f}    {: 3.0f}     {}  {}        " \
                              "{:9.0f}  {:9.0f}\n".format(
                         force, phase, h, k, l, phi, psi, D, D_err, stress, stress_err
                     )
