@@ -16,7 +16,7 @@ class DataRead(object):
 
     def save_data(self, filename, material="random"):
         header = "#Material: {} \n" \
-                 "#Force:\t Phase:\t  hkl:\t phi:\t psi:\t D:\t   D error:\t stress:\t    stress error:\n".format(material)
+                 "#Force:\t Phase:\t  hkl:\t phi:\t psi:\t D:\t\t   D error:\t\t stress:\t    stress error:\n".format(material)
         data = ""
         phase_keys = sorted(self.Data.data_dict.keys())
         for i, phase in enumerate(phase_keys):  # loop over all phases
